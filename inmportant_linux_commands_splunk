@@ -1,0 +1,608 @@
+index=_audit | table _time user action info
+
+sudo apt-cache policy splunk | grep
+
+/opt/splunk/var/log/splunk
+
+project=TechOps and status=Completed and component not in (deployment,termination)
+
+Check the ubuntu Version : lsb_release -a
+
+RT Related: 
+
+LOGS ON CM:
+sudo su -
+tail -100f /var/log/syslog | grep --line-buffered splunk-upgrader
+netstat -anpt|grep 9997
+
+touch /opt/splunk/var/run/splunk_upgrade_lockfile
+
+index=customer_os_logs process="splunk-upgrader" host=c0m1*.bcbsma.* earliest=-4h
+
+CHECK CERT ROTATION: 
+
+| `stack_ssl_restapi(*)`
+| search cloudworksenv="lve" AND provenance="file" AND customer_type="Customer" AND role="cluster-master" AND stack IN (stack1, stack2, stack3)
+| sort 0 expiry_days stack
+| table stack expiry_days
+
+CHECK MW IN MULTI STACK:
+
+#!/bin/bash
+
+stacks=( cummins siren sistack2 sitelink axacloud corecivic greenlightbio implantbase keringamericas latinoccu lifeimage manpowergroup new barberinstitute assure-aig-anz cleaninternet cyberreefsolutions ellenbytech greenitea natss neshaminy nuevatel onpeak )
+for i in "${stacks[@]}"
+do
+echo "$i"
+cloudctl stacks get "$i" | grep maintenanceWindow -A 5
+done
+
+
+CERT ROTATE : 
+
+  python3 server_cert_rotate_and_approve.py -f stacks.txt -env lve -jira TO-206576 -action server_cert_rotate
+
+
+cloudctl stacks disable release-train corecivic -r "TO-206923 Splunk Upgrade"
+cloudctl stacks enable release-train STACKNAME 
+
+ Check disk space : 
+ du -hax  | sort -rh | head -n 40
+
+ sudo puppet config set noop true
+
+ Guest password: Cr3st#2o13
+
+====================================================================================================================================================================================
+MISC:
+
+PYTHONPATH="" LD_LIBRARY_PATH="";local-backup-splunketc backup
+
+vault kv get  -version $2 cloud-sec/std/lve/stacks/$1/admin | egrep   'plaintext|version'
+
+ 
+
+====================================================================================================================================================================================
+ETC BackUP: 
+
+tar -czf /opt/splunk/tmp//TO-181297/etc-$(date +%F-%H%M%S).tgz /opt/splunk/etc/
+====================================================================================================================================================================================
+du -h --max-depth=1 | sort -hr | grep kvstore
+====================================================================================================================================================================================
+Pinak@199427
+Stack Upgrade
+====================================================================================================================================================================================
+splunk cmd openssl x509 -in /opt/splunk/etc/auth/mncgrp_server.pem -noout -enddate
+====================================================================================================================================================================================
+splunk show cluster-bundle-status |egrep "bundle=|status=" |sort |uniq -c
+====================================================================================================================================================================================
+
+export PUPPET_SERVER=puppet-master.lve.splunkcloud.systems
+export OKTACLOUD_USER=dsajagure
+export STACK_NAME=nasdaqemea
+export PUPPET_ENVIRONMENT=production
+export SPLUNK_VERSION=9.0.2209.4
+export CHECKS_FILE=preflight-puppet-checks.yaml
+export OKTA_USER=dsajagure
+export JIRA_ID=TO-237744
+export VAULT_SERVER=vault.splunkcloud.systems
+export STACK_ENV=lve
+export STACK_ACCOUNT=std
+export KERNEL_VERSION=4.4.0-1090-aws
+
+====================================================================================================================================================================================
+Maintainence Window : 
+
+"ranges": [
+        {
+          "startTime": "00:00",
+          "duration": "23h59m"
+        }
+      ]
+
+====================================================================================================================================================================================
+
+splunk apply shcluster-bundle --answer-yes -target https://sh-i-0ba6fa963bc7b18db.nswhealth.splunkcloud.com:8089 -preserve-lookups true
+
+
+====================================================================================================================================================================================
+MW Estimate TL Leads:
+
+Hi Neel Rajgor, Sachi Patel  
+
+We need MW estimate confirmation for the CORE + ES Upgrade. 
+
+Stack: fifa
+Jira: https://splunk.atlassian.net/browse/TO-235994
+MW Hours: 8 hours. 
+
+Core: 4 hours.
+ES : 4 hours 
+
+SH: 7 (with SHC)
+IDX: 5
+
+====================================================================================================================================================================================
+
+Check ITSI Collection using BTOOL:
+
+splunk btool itsi_event_management list --debug precheck | grep kv_store_collection_size_limit
+
+ITSI Template:
+
+SO:
+
+SP:
+
+Glass Tables:
+
+Service:
+
+Service Templates:
+
+KPI Threshold:
+
+Entities:
+
+Entity Types:
+
+ITSI Notable Count for KVStore: 
+
+Health Check Dashboard:
+
+====================================================================================================================================================================================
+Upgrdae Readiness COMMENT: 
+
+The upgrade readiness dashboard is not visible in ITSI app UI, this is because the customer has modified it on their own and as a part of post checks, we modify the URL and check the upgrade readiness dashboard. So if a customer faces any kind of issue in ITSI app so he can use this can URL and can resolve the error in the readiness dashboard.
+
+====================================================================================================================================================================================
+
+SOW:
+
+Add MR
+
+Take backup with EBTool
+
+Verify kvstore size by using the below command
+
+cd var/lib/splunk/
+du -sh kvstore
+
+Check kvstore status before taking backup
+
+Take kvstore backup on itsi sh and c0m1 as per RB.
+
+Verify kvstore status
+
+Update the spec file and add MW
+
+"premiumApps": {
+   "itsi": {
+        "ensure": "present",
+        "targets": [
+          "sh2"
+        ],
+        "version": "4.15.0-19438"
+      }
+}
+   {
+      "id": 5391,
+      "version": "1.8.0",
+      "targets": [
+         "sh2"
+      ],
+      "ensure": "present"
+   }
+"featureFlags": {
+      "itsi_restartless_enabled": true,
+    }
+
+Get PR Approved and Merged
+
+Run the puppet and check the status
+
+Go to SH UI and Upgrade ITSI
+
+Check for the Upgrade readiness dashboard from the below link and update the customer if any error is found to resolve from their end:
+
+Upgrade Readiness
+
+Disable the app-specific Content Pack from the UI as per RB.
+
+Perform relevant post-checks as per RB, and remove temp MW.
+
+Remove MR and ensure no critical alerts are present
+
+Update CRM and close the Jira
+
+RB: ITSI
+General guidelines
+NON-SSAI
+
+Special instruction
+
+MW: 3 Hrs
+
+====================================================================================================================================================================================
+
+
+ES Template
+
+SO: 
+
+SP: 
+
+ESP: 
+
+Puppet: 
+
+Security Posture: 
+
+Risk Analysis: 
+
+ES Version: 
+
+KVStore Size:
+
+SHC Status: 
+
+ES SH NSlookup: 
+
+Local/Lookups/Collection: 
+
+====================================================================================================================================================================================
+
+ES KVStore Backup Process: 
+
+
+~~~~~~~~~~~~~~~~~~~~~~
+PYTHONPATH="" LD_LIBRARY_PATH="";local-backup-splunketc backup
+~~~~~~~~~~~~~~~~~~~~~~
+mkdir tmp/TO-195677
+~~~~~~~~~~~~~~~~~~~~~~
+splunk show kvstore-status
+~~~~~~~~~~~~~~~~~~~~~~
+
+Ready Commands: 
+
+sudo systemctl stop splunk
+sudo puppet agent --disable
+sudo su - splunk
+cd /opt/splunk/var/lib/splunk
+tar -czf /opt/splunk/tmp/TO-195677/kvstore_backup.tgz /opt/splunk/var/lib/splunk/kvstore/
+ls -la  /opt/splunk/tmp/TO-195677/
+
+--From RB: 
+
+sudo systemctl stop splunk
+sudo puppet agent --disable
+sudo su - splunk
+cd /opt/splunk/var/lib/splunk
+tar -czf /opt/splunk/tmp/<TO-Ticket>/kvstore_backup.tgz /opt/splunk/var/lib/splunk/kvstore/
+
+~~~~~~~~~~~~~~~~~~~~~~
+
+sudo systemctl start splunk
+sudo puppet agent --enable
+~~~~~~~~~~~~~~~~~~~~~~
+
+sudo su - splunk
+splunk show kvstore-status
+
+
+
+====================================================================================================================================================================================
+
+Noah Migration: 
+
+ "featureFlags": {
+      "prepare_for_noah_migration": true
+    }
+
+====================================================================================================================================================================================
+Emerald Workaround:
+
+* We need to add the below config and temporary MW in CO2 spec. (This change will restart the cluster master).
+* once the change is completed please confirm if config is applied or not with the below btool command. (Value should be false)
+{code}
+splunk btool server list --debug | grep enable_encrypt_bundle
+{code}
+
+"config": [
+        {
+          "app": "system",
+          "conf": "server",
+          "key": "enable_encrypt_bundle",
+          "stanza": "clustering",
+          "value": "false"
+        },
+
+====================================================================================================================================================================================
+Repaver Work around: 
+
+ps -aux | grep splunk-repave-supervisor
+kill -9 PID
+puppet agent -t
+
+====================================================================================================================================================================================
+
+restore local / lookups On SH/SHC{all members}
+
+from sh
+
+ls -la /opt/splunk/tmp/TO-195677/Splunk_ML_Toolkit
+ls -la /opt/splunk/etc/apps/Splunk_ML_Toolkit
+cd /opt/splunk/tmp/TO-195677/Splunk_ML_Toolkit
+cp -pR lookups /opt/splunk/etc/apps/Splunk_ML_Toolkit/
+cp -pR local /opt/splunk/etc/apps/Splunk_ML_Toolkit/
+ls -la /opt/splunk/etc/apps/Splunk_ML_Toolkit
+hostname -f;date
+
+restart sh for Single SH. 
+RR for the SHC.
+
+====================================================================================================================================================================================
+
+From c0m1 
+
+ls -la /opt/splunk/etc/master-apps/Splunk_ML_Toolkit
+cd /opt/splunk/tmp/TO-195677/Splunk_ML_Toolkit
+cp -pR local /opt/splunk/etc/master-apps/Splunk_ML_Toolkit/
+ls -la /opt/splunk/etc/master-apps/Splunk_ML_Toolkit
+
+splunk apply cluster-bundle
+------------------------------------------------------------
+
+
+ls -la /opt/splunk/tmp/TO-195677/Splunk_ML_Toolkit
+ls -la /opt/splunk/etc/apps/Splunk_ML_Toolkit
+cd /opt/splunk/tmp/TO-195677/Splunk_ML_Toolkit
+cp -pR lookups /opt/splunk/etc/apps/Splunk_ML_Toolkit/
+ls -la /opt/splunk/etc/apps/Splunk_ML_Toolkit
+hostname -f;date
+
+====================================================================================================================================================================================
+
+KVStore Backup: 
+
+splunk backup kvstore -archiveName 2890_TO-195677 -appName Splunk_ML_Toolkit
+
+====================================================================================================================================================================================
+
+KVStore Restore
+
+splunk restore kvstore -archiveName 2890_TO-195677.tar.gz -appName Splunk_ML_Toolkit
+
+splunk restore kvstore -archiveName 2890_TO-195677.tar.gz -appName Splunk_ML_Toolkit
+====================================================================================================================================================================================
+
+/opt/splunk/bin/splunk apply shcluster-bundle --answer-yes -target https://sh-i-0a4699ebe3c4dac70.nationwide.splunkcloud.com:8089 -preserve-lookups true 
+rm /opt/splunk/.apply_shcluster_bundle.lock
+ 
+
+splunk backup kvstore -archiveName 2890_TO-195677 -appName  Splunk_ML_Toolkit
+
+====================================================================================================================================================================================
+
+SCP Command:         
+
+SH to Local: 
+
+ scp sh-i-086c9d266445fdac6:/home/dsajagure/2890_TO-195677.tar.gz ~/Downloads/ 
+
+Local to SH: 
+scp 2890_TO-195677.tar.gz dsajagure@sh-i-044e7721680c6843a:/home/dsajagure
+scp 1621_TO-195677.tar.gz dsajagure@sh-i-044e7721680c6843a:/home/dsajagure
+
+====================================================================================================================================================================================
+
+Manual Intervention for the Noah migration; 
+
+python3 migrate_apps.py -a upload -d $stackid [ -o $object_bucket -s $state_bucket ]
+python3 migrate_apps.py -a upload -d mhi-ded -o s2-objects-default-vpc-080c2b48c590fd9c3-ap-northeast-1-lve -s state-default-vpc-080c2b48c590fd9c3-ap-northeast-1-lve
+
+====================================================================================================================================================================================
+
+NOAH Migration Post Checks: 
+
+migration_complete : true
+total_indexers count = migrated_idx_count - 3
+total_sh count = migrated_sh_count - 1
+scheduled_early_bootup and scheduled_late_bootup are > 0
+generated_migration_plan : true
+found_noah_bundle : true
+periodic_roll_bucket_reqs_scheduled : 14 (is greater than 0)
+Migrated IDM Count = 1.
+
+
+POST CHECKS:
+
+AWS: 
+
+List of Successfully migrated nodes:
+
+Modular Input Checkpoint Files: 
+
+List of KVStore Checkpoint Files: 
+
+Recent bucket boot-strapping status
+
+No IDX or SH Crashes: 
+ 
+Ingestion Trends:
+
+HEC Ingestion Inputs: 
+
+CM UI :
+
+
+NSLookup: 
+
+
+{code}
+{code}
+
+
+INDEXER has hot buckers: 
+
+Last Chance Index:
+
+Users Can search: 
+
+Noah Smart Bus: 
+
+Hot Buckets added by Peers:
+
+Estimated Indexing Rate: 
+
+Search Completeness 
+
+Heart Beat by peers: 
+
+====================================================================================================================================================================================
+
+SH Repaver Prechecks:  
+
+SO: 
+
+SP: 
+
+Puppet: 
+
+No Alerts:
+
+No Bucket Repair in progress: 
+
+Stack Health: 
+
+Noah ASG:
+
+Search Head Concurrency: 
+
+AWS: 
+
+SH1: 
+
+KVStore: 
+
+====================================================================================================================================================================================
+
+CERT ROTATE :
+
+cloudctl stacks rotate-cert STACK inputs -r TICKET
+
+cloudctl stacks rotate-cert acs-eng inputs -r TO-193431
+cloudctl stacks rotate-cert ufa inputs -r TO-193431
+cloudctl stacks rotate-cert redmane inputs -r TO-193431
+
+
+
+====================================================================================================================================================================================
+
+BACKUP 
+
+mkdir tmp/TO-195677
+cp -pR etc/apps/Splunk_ML_Toolkit/ tmp/TO-195677/
+ls -la tmp/TO-195677/Splunk_ML_Toolkit/
+
+====================================================================================================================================================================================
+
+Check Last SSH on stack
+index=customer_os_logs source="/var/log/syslog" `stack(cevtit)` host!="*bastion*" sftd "msg=ssh.login" | eval time=strftime(_time,"%b %d, %Y %I:%M:%S %p") | table host,user,time
+
+Check DMC errors
+index=customer_internal `stack(colgateg)` sourcetype=dmc_agent "tag::eventtype"=error
+
+Check KVStore Logs
+index=customer_internal `stack(cape)` host="c0m1*" sourcetype=mongod 
+
+Check Puppet Logs
+index=customer_os_logs source="/var/log/syslog" `stack(libertymutual)` puppet-agent host="c0m1*" ERROR
+
+Check if DDAA Restore is running
+index=customer_os_metrics source=ps `stack(blk-apg-amrs)` archive_restore_orchestration
+
+Check splunkd restore logs
+index=customer_splunkd `stack(libertymutual)` ERROR
+
+ClsterManager bundle
+
+index=customer_splunkd `stack(libertymutual)` host="c0m1*" component=CMBundleMgr
+
+====================================================================================================================================================================================
+
+DMA Rebuild: 
+
+sudo su - splunk
+mkdir ~/tmp/cinc-48086
+cd ~/tmp/cinc-48086
+vi dma_rebuild.py
+vi inputfile_dma_rebuild_version_times.csv
+
+
+logout
+sudo screen -S cinc-48086
+screen -ls
+sudo su - splunk
+clear
+source $SPLUNK_HOME/bin/setSplunkEnv
+
+cd ~/tmp/cinc-48086
+splunk cmd python3 dma_rebuild.py
+
+tail -f /opt/splunk/var/log/splunk/dma_rebuild.log
+
+====================================================================================================================================================================================
+scp idx-i-0307c1956d1743430:/home/dsajagure/idx-i-0307c1956d1743430_DM_Splunk_SA_CIM_Network_Traffic_s3_listings.txt ~/Downloads/
+====================================================================================================================================================================================
+
+index=aws_description
+| stats count by vpc_id tags.CloudworksEnv tags.Stack
+| rename tags.Stack as stack
+| join stack type=inner
+    [|  inputlookup cinc_48086_Jan10_sh_batch.csv
+| lookup   unified_inventory.csv stack as stack, instance_label as label   output FQDN as host
+| fields - label
+| table stack host]
+    | lookup unified_inventory stack as stack output region
+| mvexpand region
+| eval bucket="state-default-"+vpc_id+"-"+region+"-"+'tags.CloudworksEnv'
+| stats count by stack host bucket
+| fields - count
+====================================================================================================================================================================================
+
+
+Important CINC Commands:
+
+SH Transfer Command: splunk transfer shcluster-captain -mgmt_uri https://sh-i-0f0e7495de5451421.rhcorporate.splunkcloud.com:8089
+
+===========================================================================================================
+Delete files specific search based on file type.
+find . -iname "*.pyc" -type f -delete
+
+
+`streaming_inventory_events(*)`
+| search description=*muting*
+| eval isStart=if(like(description,"Start%"),1,0)
+| eval isEnd=if(like(description,"End%"),1,0)
+| search stack!="undefined"
+| rex field=description "Muting Window:\s(?<mutingLabel>.+)"
+| eval startTime=if(isStart=1,_time,NULL)
+| stats sum(isStart) AS isStart sum(isEnd) AS isEnd values(startTime) AS startTime by stack mutingLabel
+| eval status=case(isStart=1 AND isEnd=1,"complete",isStart=1 AND isEnd=0,"incomplete")
+| eval _time=startTime
+| `reltime`
+| table _time reltime stack mutingLabel isStart isEnd status
+| search status="incomplete"
+| sort - _time
+
+
+
+===================================================================
+Get the IPs AWS: 
+
+curl -s https://checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'  
+
+curl https://ipinfo.io/ip
+
+
