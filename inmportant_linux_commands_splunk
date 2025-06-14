@@ -51,8 +51,6 @@ cloudctl stacks enable release-train STACKNAME
 
  sudo puppet config set noop true
 
- Guest password: Cr3st#2o13
-
 ====================================================================================================================================================================================
 MISC:
 
