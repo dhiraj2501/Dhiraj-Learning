@@ -1,10 +1,5 @@
 index=_audit | table _time user action info
 
-sudo apt-cache policy splunk | grep
-
-/opt/splunk/var/log/splunk
-
-project=TechOps and status=Completed and component not in (deployment,termination)
 
 Check the ubuntu Version : lsb_release -a
 
