@@ -28,9 +28,33 @@ https://www.youtube.com/watch?v=TVNciuZac3I
 alias ssh78="ssh devuser@10.50.4.78"
 alias ssh78="ssh devuser@10.50.4.81"
 alias ssh78="ssh devuser@10.50.4.82"
+----------------------------------------------------------------DISK RELATED-----------------------------------------------------------------------------------------------------
 
-IMPORTANT Linux Commands:
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+IMPORTANT Linux Commands for Disk Related : 
+
+sudo du -sh /var/* | sort -hr | head -n 20
+
+sudo du -h --max-depth=1 --exclude=/proc --exclude=/sys --exclude=/run / | sort -hr | head -n 10
+
+
+sudo find /var/log -type f -size +100M #Type is file -- size is greater than 100MB. 
+
+Truncate Logs: 
+ sudo truncate -s 0 /var/log/syslog
+
+-----------------------------------------------------SERVICE RELATED-----------------------------------------------------------------------------------------------
+
+
+systemctl list-units --type=service | grep rancher   ## Get the list of the service units named rancher: 
+
+systemctl cat rancher-system-agent.service         ##Get the details of the Srvice information:  ##
+
+-----------------------------------------------------------VARIOUS IMPORTANT LINUX TOOLS---------------------------------------------------------------------------------------------------------
+1. FZF
+2. YAZI
+3. BTOP
+4. DUF
+
 fzf --preview='cat {}'
   FXF preview file in the 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
