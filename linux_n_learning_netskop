@@ -47,7 +47,11 @@ Truncate Logs:
 
 systemctl list-units --type=service | grep rancher   ## Get the list of the service units named rancher: 
 
-systemctl cat rancher-system-agent.service         ##Get the details of the Srvice information:  ##
+systemctl cat rancher-system-agent.service         ##Get the details of the Srvice information:
+
+sudo systemctl disable rancher-system-agent # disable the agent at the startup. 
+sudo rm -f $(which rancher-system-agent) # remove the service by finding its existence.
+
 
 -----------------------------------------------------------VARIOUS IMPORTANT LINUX TOOLS---------------------------------------------------------------------------------------------------------
 1. FZF
