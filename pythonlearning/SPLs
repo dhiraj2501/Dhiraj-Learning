@@ -1,0 +1,8 @@
+TO get the app specific list of stacks: 
+
+index=customer_btool app=* stack=* "[launcher]" host=sh*
+| eval FQDN=host
+| lookup aws_inventory FQDN AS host 
+| rex "\/opt\/splunk\/etc\/apps\/(?<appname>.*?)\/"
+| search appname=Splunk_TA_aws version=7.5.0 cluster_architecture=noah
+| stats earliest(_time) AS _time by version, stack, appname, host, cluster_architecture
