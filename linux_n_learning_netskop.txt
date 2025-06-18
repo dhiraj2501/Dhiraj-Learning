@@ -69,6 +69,11 @@ sudo rm -f $(which rancher-system-agent) # remove the service by finding its exi
 3. BTOP
 4. DUF
 
+ls -a | fzf | xargs -I{} cat {}
+ The ls -a out put goes to fzf
+ then find the files needed. 
+ Upon clicing enter the file will send to cat to display in terminal.
+
 fzf --preview='cat {}'
   FXF preview file in the 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
