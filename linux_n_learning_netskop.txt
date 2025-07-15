@@ -11,7 +11,7 @@ https://github.com/ahmedamsaleh/Free-DevOps-Books-1/tree/master # All Devops PDF
 https://github.com/mismailzz/Linux-Troubleshooting-Scenarios-with-solutions
 https://github.com/mismailzz/Red-Hat-Linux-Command-Cheatsheet
 
--------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
 
 Udemy Course to Look: 
 
@@ -42,9 +42,11 @@ https://www.youtube.com/watch?v=TVNciuZac3I
 
 Get the piblic IP of the Machine: 
 
-----------------------------------------------------------------NETWORK RELATED -----------------------------------------------------------------------------------------------------
-curl ifconfig.me
-----------------------------------------------------------------DISK RELATED-----------------------------------------------------------------------------------------------------
+NETWORK RELATED -----------------------------------------------------------------------------------------------------
+
+curl ifconfig.me - get the ISP of the service provide. This to get the Publc IP of the Machine we are connected to. 
+
+DISK RELATED-----------------------------------------------------------------------------------------------------
 
 IMPORTANT Linux Commands for Disk Related : 
 
@@ -54,7 +56,7 @@ sudo du -sh /var/* | sort -hr | head -n 20
 
 
 For Disk: 
-
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
 . 
 ├── Tips
 │   ├── After adding/attaching a new disk to a VM, we can get its status from lsblk command by doing ~$echo 1 > /sys/block/sda/device/rescan
@@ -62,7 +64,7 @@ For Disk:
 │   ├── We can also recreate the filesystem on block device as it will automatically format the old one
 │   ├── If we have a disk(with created partition/FS) we can share the .vmdk to other VM. So after mounting we would have a same data as it was on previous one.
 └── ...
-
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
 Linux Commands for Regular Usase: 
   
 $nslookup #for DNS resolution
@@ -86,10 +88,10 @@ $free -h
 $cat /proc/meminfo
 $env    
 
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
 Show memory in GB: 
-
 egrep --color 'Mem|Cache|Swap' /proc/meminfo | awk '{print $1 " " $2/1000/1000 "GB"}' #show information in GB
-
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
 
 FIND COMMANDS: 
 
@@ -107,16 +109,28 @@ find / -path /proc -prune -o -path /sys -prune -o -type d -perm -0002 -mindepth 
 #find files with permission
 find / -xdev \( -perm -4000 -o -perm -2000 \) -type f    #4000 for suid, 2000 for guid
 
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
+
+TOP Related
+
+sudo top -b -n 1 | head -n +5 
+# get the top putput in batch mode (b) for iteration (-n 1, only once), get the output of the fist five lines only. 
+
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
 
 sudo du -h --max-depth=1 --exclude=/proc --exclude=/sys --exclude=/run / | sort -hr | head -n 10
 
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
 
 sudo find /var/log -type f -size +100M #Type is file -- size is greater than 100MB. 
 
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
 Truncate Logs: 
  sudo truncate -s 0 /var/log/syslog
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
 
------------------------------------------------------SERVICE RELATED-----------------------------------------------------------------------------------------------
+
+SERVICE RELATED-----------------------------------------------------------------------------------------------
 
 
 systemctl list-units --type=service | grep rancher   ## Get the list of the service units named rancher: 
@@ -125,6 +139,8 @@ systemctl cat rancher-system-agent.service         ##Get the details of the Srvi
 
 sudo systemctl disable rancher-system-agent # disable the agent at the startup. 
 sudo rm -f $(which rancher-system-agent) # remove the service by finding its existence.
+
+*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*-------------------*-------------------------*
 
 
 -----------------------------------------------------------VARIOUS IMPORTANT LINUX TOOLS---------------------------------------------------------------------------------------------------------
