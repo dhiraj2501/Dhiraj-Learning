@@ -1,0 +1,414 @@
+------------------------------------SHREE SWAMI SAMARTH ---------------------------------------------------------------- 
+
+
+------------------------------------IMPORTANTGIT:---------------------------------------------------------------- 
+
+https://github.com/sherlock-project/sherlock # sherlock.
+https://github.com/Z4nzu/hackingtool?tab=readme-ov-file #hacking tools.
+https://github.com/hwdsl2/setup-ipsec-vpn
+https://github.com/ahmedamsaleh/Free-DevOps-Books-1/tree/master # All Devops PDF Books.
+https://maigret.readthedocs.io/en/latest/features.html # maigret, sherlock ka bhai.
+
+Udemy Course to Look: 
+
+Project Management: https://www.udemy.com/course/deeply-practical-project-management/learn/lecture/8100066#overview
+Conflict Management https://www.udemy.com/course/conflict-management-with-emotional-intelligence/learn/lecture/17410630?start=0#overview
+Excel : https://www.udemy.com/course/how-to-use-microsoft-excel-beginning-to-advanced-tutorials/?couponCode=LOCLZDOFFPINTRMT
+Excel Chart : https://www.udemy.com/course/advanced-excel-charts-graphs/learn/lecture/14162983?start=1#overview
+
+Prometheus: https://www.udemy.com/course/prometheus-course/learn/lecture/20679972?start=0#overview
+Networking : https://www.udemy.com/share/103PKM3@LwgKSAs_YPYMQO4EDpHfnFbHsjbEjkJP80PZkmTh782rQumtjjJ11LMDIlwQcpjF/
+Ansible: https://www.udemy.com/course/mastering-ansible/?couponCode=LOCLZDOFFPINTRMT
+Puppet: https://www.udemy.com/course/mastering-puppet-for-large-infrastructures/?couponCode=LOCLZDOFFPINTRMT
+Puppet : https://www.udemy.com/course/learning-puppet/?couponCode=LOCLZDOFFPINTRMT
+Elastisearch: https://www.udemy.com/course/elasticsearch-complete-guide/?couponCode=LOCLZDOFFPINTRMT
+Kubernets: https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/learn/lecture/14298418?start=90#overview
+Terraform: https://www.udemy.com/course/learn-devops-infrastructure-automation-with-terraform/learn/lecture/46880163?start=0#overview
+Linux: https://www.udemy.com/course/fundamentals-of-unix-and-linux-system-administration/learn/lecture/4473604?start=690#overview
+Sap HANA: https://www.udemy.com/share/103iR23@oBdq1ctrkV6tgPzYyQOlnfJ3EORDmRGCiI8cHCap0EOqiwACGxaw4X9Bu3PjK6T9/
+AWS: https://www.udemy.com/course/aws-certified-solutions-architect-associate-saa-c03/learn/lecture/13541138?start=0#overview
+Python: https://www.udemy.com/course/complete-python-developer-zero-to-mastery/learn/lecture/16052040?start=0#overview
+Pythong: https://www.udemy.com/course/complete-python-bootcamp/learn/lecture/20205526?start=0#overview
+MongoDB: https://www.udemy.com/course/mongodb-the-complete-developers-guide/learn/lecture/11850936?start=0#overview
+
+
+YOUTUBE MUSIC: 
+https://www.youtube.com/watch?v=TVNciuZac3I
+
+
+alias ssh78="ssh devuser@10.50.4.78"
+alias ssh78="ssh devuser@10.50.4.81"
+alias ssh78="ssh devuser@10.50.4.82"
+----------------------------------------------------------------DISK RELATED-----------------------------------------------------------------------------------------------------
+
+IMPORTANT Linux Commands for Disk Related : 
+
+sudo du -sh /var/* | sort -hr | head -n 20
+
+sudo du -h --max-depth=1 --exclude=/proc --exclude=/sys --exclude=/run / | sort -hr | head -n 10
+
+
+sudo find /var/log -type f -size +100M #Type is file -- size is greater than 100MB. 
+
+Truncate Logs: 
+ sudo truncate -s 0 /var/log/syslog
+
+-----------------------------------------------------SERVICE RELATED-----------------------------------------------------------------------------------------------
+
+
+systemctl list-units --type=service | grep rancher   ## Get the list of the service units named rancher: 
+
+systemctl cat rancher-system-agent.service         ##Get the details of the Srvice information:
+
+sudo systemctl disable rancher-system-agent # disable the agent at the startup. 
+sudo rm -f $(which rancher-system-agent) # remove the service by finding its existence.
+
+
+-----------------------------------------------------------VARIOUS IMPORTANT LINUX TOOLS---------------------------------------------------------------------------------------------------------
+1. FZF
+2. YAZI
+3. BTOP
+4. DUF
+
+fzf --preview='cat {}'
+  FXF preview file in the 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+find . -type f -exec grep --color=always SEARCWORD {} \
+  Find the SEARCHWORD in the files present in the current directory and highlgth it with the color. 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+find / -type f -exec sh -c 'cat /dev/urandom' > "{}"' \;
+  find / --> file everry file in the machine
+  type f --> files 
+  sh -c --> open up a new shell instance 
+  command that --> 'cat /dev/urandom' > "{}"' \;
+  devurandom --> a special type of file that produces random data
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+docker command to stop the docker based on the name
+  Find the Docker List 
+    docker ps -q --filter name=st2-SEARCHWORD*
+  Stop all the dockers.
+    docker stop $(docker ps -q --filter name=st2-SEARCHWORD*)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+:(){:|:&};:
+  Most Dangerous peice of code: Called FORK BOMB
+  Never run this command: 
+  How: 
+    this is a shell script
+    Function called colon --> :()
+    Body of the function --> {}
+    Calling the function recursively {:}
+    Piping the output to the pipe command {:\:}
+    Pusehs the function of the pipe command to the background:--> :&
+      background process wont wait for the function to complete before running againait, they will run 
+      they will run immediately
+      they will keep running until the PC crashes. 
+      indifinite process. 
+    End the function with semicolon
+    Call the function again.-->  ; :
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  
+
+
+
+
+
+================================================================================================================================================================
+
+VM Creation : https://supportjira.cdsys.local/browse/IS-56372 
+
+
+My LD: https://supportjira.cdsys.local/browse/LD-73380
+
+Gatik@190323
+
+My VMS: 
+
+10.50.4.78
+10.50.4.81
+10.50.4.82
+
+sudo mount 10.50.4.78:/srv/nfs/shared /mnt
+
+10.50.4.78:/srv/nfs/shared /mnt nfs defaults 0 0
+sudo ufw allow from 10.50.4.81 to any port nfs
+
+ssh-copy-id devuser@10.50.4.78
+
+ssh -L 3000:localhost:80 devuser@10.50.4.78
+ssh -L 30517:localhost:8080 devuser@10.50.4.78
+
+ssh -L 8080:192.168.49.2:30517 devuser@10.50.4.78
+
+ssh -L 8080:$(minikube ip):30517 devuser@10.50.4.78
+
+
+
+ssh devuser@10.50.4.78
+ssh devuser@10.50.4.81
+ssh devuser@10.50.4.82
+
+Bash Script for creating the users using the automation. 
+
+=========================================================
+
+#!/bin/bash
+
+# Check for root permissions
+if [ "$EUID" -ne 0 ]; then
+  echo "⚠️  Please run as root."
+  exit 1
+fi
+
+# User details (You can expand this with more users or read from a file)
+USERNAME="devuser1"
+PASSWORD="Dev@1234"
+SHELL="/bin/bash"
+GROUP="developers"
+
+# Create group if it doesn't exist
+if ! getent group "$GROUP" > /dev/null; then
+  echo "➕ Creating group: $GROUP"
+  groupadd "$GROUP"
+fi
+
+# Check if user exists
+if id "$USERNAME" &>/dev/null; then
+  echo "⚠️  User '$USERNAME' already exists."
+  exit 1
+else
+  echo "👤 Creating user: $USERNAME"
+  useradd -m -s "$SHELL" -G "$GROUP" "$USERNAME"
+  
+  # Set password
+  echo "$USERNAME:$PASSWORD" | chpasswd
+
+  echo "✅ User '$USERNAME' created and added to group '$GROUP'."
+fi
+
+=========================================================
+
+
+
+sudo apt install qemu-kvm 
+sudo apt install  libvirt-daemon-system 
+sudo apt install  libvirt-clients 
+sudo apt install  bridge-utils 
+sudo apt install  virt-manager
+
+
+virt-install \ --name ubuntu-vm \ --ram 4096 \ --vcpus 2 \ --disk path=~/vms/ubuntu/ubuntu-vm.qcow2,format=qcow2 \ --cdrom ~/vms/ubuntu/ubuntu-24.04-desktop-amd64.iso \ --os-type linux \ --os-variant ubuntu24.04 \ --network network=default \ --graphics vnc \ --noautoconsole
+
+KUBERNETES: 
+
+
+VERSION=1.29.2
+
+curl -LO https://packages.cloud.google.com/apt/pool/kubelet_1.33.1-00_amd64_10.deb
+curl -LO https://packages.cloud.google.com/apt/pool/kubeadm_1.33.1-00_amd64_10.deb
+
+sudo dpkg -i kubelet_1.33.1-00_amd64.deb
+sudo dpkg -i kubeadm_1.33.1-00_amd64.deb
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+    - name: mycontainer
+      image: nginx
+
+
+kubectl create deployment tstdeploy --image=nginx --replicas=3
+
+kubectl get deployment tstdeploy -o yaml
+
+kubectl set image deployment/myapp nginx=nginx:1.25
+
+
+kubectl create deployment tstdeploy --image=nginx
+
+
+kubectl expose deployment tstdeploy --port=80 --type=NodePort
+
+
+kubectl exec  -it web-0 -- /bin/sh
+
+kubectl autoscale deployment tstdeploy --cpu-percent=50 --min=1 --max=5
+
+
+rancher container ID: 4093fbc848e8
+
+docker logs 4093fbc848e8 2>&1 | grep "Bootstrap Password:"
+
+Rancher Password: Gatik@190323
+
+
+kubectl exec -it grafana-5dffd9b476-ffn7m -- curl http://localhost:3000
+
+kubectl get secret grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+
+
+===========================================================================================
+
+
+Install Zabbix as a Docker Container:
+
+Zabbix Server
+
+sudo docker run --name tmp-zabbix-server-mysql \
+  -e DB_SERVER_HOST="10.50.4.81" \
+  -e MYSQL_USER="admin" \
+  -e MYSQL_PASSWORD="admin@1234" \
+  --init -d zabbix/zabbix-server-mysql:alpine-7.2-latest
+
+
+recreate MySQL : 
+sudo docker run --name zabbix--mysql-db \
+  --network zabbix-net \
+  -e MYSQL_ROOT_PASSWORD=rootpass \
+  -e MYSQL_DATABASE=zabbix \
+  -e MYSQL_USER=admin \
+  -e MYSQL_PASSWORD=admin@1234 \
+  -d mysql:8.0
+
+
+Install the front End:
+
+docker run --name ds-zabbix-web-nginx-mysql -e DB_SERVER_HOST="10.50.4.81" -e MYSQL_USER="admin" -e MYSQL_PASSWORD="admin@1234" -e ZBX_SERVER_HOST="some-zabbix-server" -e PHP_TZ="some-timezone"
+ -d zabbix/zabbix-web-nginx-mysql:alpine-7.2-latest
+
+ docker run --name ds-zabbix-web \
+  -e DB_SERVER_HOST="10.50.4.81" \
+  -e MYSQL_DATABASE="zabbix" \
+  -e MYSQL_USER="admin" \
+  -e MYSQL_PASSWORD="admin@1234" \
+  -e ZBX_SERVER_HOST="zabbix-server-mysql" \
+  -e PHP_TZ="Asia/Kolkata" \
+  -p 8080:8080 \
+  --link ds-zabbix-server-mysql \
+  -d zabbix/zabbix-web-nginx-mysql:alpine-7.2-latest
+
+
+
+  docker run --name ds-mysql \
+    -e MYSQL_ROOT_PASSWORD=rootpass \
+    -e MYSQL_DATABASE=zabbix \
+    -e MYSQL_USER=admin \
+    -e MYSQL_PASSWORD=admin@1234 \
+    -d mysql:8.0
+
+
+
+http://10.50.4.81:8080
+
+
+
+curl -o images.sql https://raw.githubusercontent.com/unix1986/zabbix/refs/heads/master/database/mysql/images.sql
+curl -o schema.sql https://raw.githubusercontent.com/unix1986/zabbix/refs/heads/master/database/mysql/schema.sql
+curl -o data.sql https://raw.githubusercontent.com/unix1986/zabbix/refs/heads/master/database/mysql/data.sql
+
+
+INSERT INTO `users` (`userid`,`name`,`surname`,`passwd`) values ('1','Zabbix','Administrator','5fce1b3e34b520afeffb37ce08c7cd66');
+INSERT INTO `users` (`userid`,`name`,`surname`,`passwd`) values ('2','','','d41d8cd98f00b204e9800998ecf8427e','','0','900','en_GB','30','1','default','50');
+
+
+To get into mysql:
+
+docker exec -it zabbix-mysql bash
+
+to access mysql cli: 
+
+mysql -uzabbix -pzabbixpass zabbix
+
+
+================================================================================================================================================================
+
+Get the IPv4 address one line for Linux:
+
+ip -4 -o addr show ens160 | awk '{print $4}'
+
+Output is : 10.50.4.78/20
+
+ip -4 -o addr show ens160 | awk '{print $4}' | sed 's/\/20//g'
+
+Output:
+  10.50.4.78
+
+
+================================================================================================================================================================
+
+SUMO LOGIC TRIAL ACCOUNT:
+
+Welcome, kisace7430@linacit.com
+
+
+Sumo@22113344
+
+suQOUa2gpIBC3d
+
+GFp04DiXdqLTemt69IJ3u16xjq8nQEImJOoSxNp0vq0R7qfbX2quRum9IWtVjsbD
+
+
+
+
+
+
+================================================================================================================================================================
+
+Reduce Docker Image Size:
+
+
+
+1. **Use a Lightweight Base Image**: 
+   - Example: `FROM alpine:latest`
+
+2. **Multi-Stage Builds**: 
+   - Build in one stage, copy artifacts to a clean stage.
+
+3. **Minimize Layers**: 
+   - Combine commands into a single `RUN`.
+   - Example: 
+     ```Dockerfile
+     RUN apt-get update && apt-get install -y package1 package2 && apt-get clean && rm -rf /var/lib/apt/lists/*
+     ```
+
+4. **Remove Unnecessary Files**: 
+   - Delete temporary files and caches.
+   
+5. **Use `.dockerignore` File**: 
+   - Exclude unnecessary files.
+   - Example: 
+     ```
+     node_modules
+     *.log
+     ```
+
+6. **Optimize Dependencies**: 
+   - Install only necessary dependencies.
+
+7. **Use `COPY` instead of `ADD`**: 
+   - `COPY` is more predictable.
+
+
+
+================================================================================================================================================================
+
+curl -LO https://github.com/catppuccin/alacritty/raw/main/catppuccin-latte.toml
+
+
+
+
+Install iterm2 for MAC / Regular Terminal for Ubuntu. 
+
+For MAC:
+    brew install starshi
+sudo curl -sS https://starship.rs/install.sh | sh
+echo 'eval "$(starship init bash)"' >> ~/.bashrc
+source ~/.bashrc
+starship preset catppuccin-powerline -o ~/.config/starship.toml
